@@ -84,11 +84,11 @@ set_target_properties(${MAIN_TARGET_NAME} PROPERTIES
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
     # Override android package source directory
-    # QT_ANDROID_PACKAGE_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/android
+    QT_ANDROID_PACKAGE_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/android
 )
 
 if (ANDROID)
-    set_target_properties(appNuve PROPERTIES
+    set_target_properties(${MAIN_TARGET_NAME} PROPERTIES
          QT_ANDROID_EXTRA_LIBS
              "${ANDROID_SDK_ROOT}/android_openssl/ssl_3/${CMAKE_ANDROID_ARCH_ABI}/libcrypto_3.so;${ANDROID_SDK_ROOT}/android_openssl/ssl_3/${CMAKE_ANDROID_ARCH_ABI}/libssl_3.so"
     )
