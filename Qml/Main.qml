@@ -7,8 +7,8 @@ import Application.Style
  */
 ApplicationWindow {
     id: mainWindow
-    width: 640
-    height: 480
+    width: Style.appWidth
+    height: Style.appHeight
     visible: true
     title: qsTr("Project Template")
 

@@ -47,26 +47,48 @@ QtObject {
     property color      grey:           _isLight ? "#9E9E9E" : "#EEEEEE"
     property color      blueGrey:       _isLight ? "#607D8B" : "#B0BEC5"
 
+
+    //! PlatformTools instance
+    readonly property PlatformTools     platformTools:      PlatformTools { }
+
     //! Font sizes
-    readonly property real       defaultFontPt:      11
-    readonly property real       secondaryFontpt:    9
-    readonly property real       tertiaryFontpt:     7.5
+    readonly property real              defaultFontPt:      platformTools.defaultFontPt
+    readonly property real              secondaryFontpt:    platformTools.secondaryFontPt
+    readonly property real              tertiaryFontpt:     platformTools.tertiaryFontPt
 
     //! Number properties
-    property int        elevation:          6
-    property int        leftPadding:        16
-    property int        rightPadding:       16
-    property int        topPadding:         10
-    property int        bottomPadding:      10
+    property int        elevation:          dp(6)
+    property int        leftPadding:        dp(16)
+    property int        rightPadding:       dp(16)
+    property int        topPadding:         dp(10)
+    property int        bottomPadding:      dp(10)
     property int        roundedCorners:     Material.MediumScale
     property int        borderWidth:        1
     property int        delegateHeight:     Material.delegateHeight
     property int        touchTarget:        Material.touchTarget
+
+    //! Mobile specific properties
+    readonly property bool  isMobile:                   platformTools.isMobile
+    readonly property int   appWidth:                   isMobile ? Screen.desktopAvailableWidth : 393
+    readonly property int   appHeight:                  isMobile ? Screen.desktopAvailableHeight : 777
+    readonly property int   notAvailableHeight:         Screen.height - Screen.desktopAvailableHeight
+    readonly property real  keyboardHeight:             Qt.inputMethod.visible
+                                                        ? (Qt.inputMethod.keyboardRectangle.height
+                                                           / platformTools.devicePixelRatio + notAvailableHeight / 2)
+                                                        : 0
 
     //! Specific styles for some Controls
     readonly property FontIconSize fontIconSize: FontIconSize {
         largePt: Application.font.pointSize * 1.25
         normalPt: Application.font.pointSize * 1
         smallPt: Application.font.pointSize * 0.8
+    }
+
+    //* Methods
+    //* ************************************/
+    //! Using PlatformTools returns a size that is suitable for this screen
+    function dp(size)
+    {
+        return platformTools.dp(size);
     }
 }
