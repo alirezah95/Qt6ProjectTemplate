@@ -1,5 +1,6 @@
 import QtQuick
-import QtQuick.Controls
+
+import Application.Style
 
 /*!
  * Application's main window
@@ -10,4 +11,10 @@ ApplicationWindow {
     height: 480
     visible: true
     title: qsTr("Project Template")
+
+    //* Load fonts
+    //* ************************************/
+    FontLoader { source: "qrc:/qt/qml/ProjectTemplate/Res/Fonts/fa-brands-400.ttf" }
+    FontLoader { source: "qrc:/qt/qml/ProjectTemplate/Res/Fonts/fa-regular-400.ttf" }
+    FontLoader { source: "qrc:/qt/qml/ProjectTemplate/Res/Fonts/fa-solid-900.ttf" }
 }
