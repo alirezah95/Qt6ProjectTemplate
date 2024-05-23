@@ -41,6 +41,7 @@ qt_add_qml_module(ApplicationStyle
     SOURCES
         src/bindablevar.h
         src/bindablevar.cpp
+        src/platformtools.h
 )
 
 qt_add_qml_module(ApplicationStyleImpl
