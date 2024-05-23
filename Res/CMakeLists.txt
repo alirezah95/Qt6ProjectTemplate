@@ -6,5 +6,8 @@ qt_add_qml_module(appResources
     STATIC
 
     RESOURCES
+        Fonts/fa-brands-400.ttf
+        Fonts/fa-regular-400.ttf
+        Fonts/fa-solid-900.ttf
 )
 
