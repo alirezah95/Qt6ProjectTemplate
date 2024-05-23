@@ -26,6 +26,11 @@ set(QML_IMPORT_PATH
     FORCE
 )
 
+# Some properties for mobile devices
+set(PROJECT_VERSION_SHORT ${CMAKE_PROJECT_VERSION_MAJOR}.${CMAKE_PROJECT_VERSION_MINOR})
+set(BUILD_CODE 8)
+set(PACKAGE_IDENTIFIER "com.example.projecttemplate")
+
 # NO_CACHEGEN is set for qt_add_qml_module() in DEBUG mode so we can have a better QML Preview
 # functionality (Only Qt6.6 and later)
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -73,12 +78,65 @@ target_compile_definitions(${MAIN_TARGET_NAME} PRIVATE
 # If you are developing for iOS or macOS you should consider setting an
 # explicit, fixed bundle identifier manually though.
 set_target_properties(${MAIN_TARGET_NAME} PROPERTIES
-#    MACOSX_BUNDLE_GUI_IDENTIFIER com.example.${MAIN_TARGET_NAME}
+    MACOSX_BUNDLE_GUI_IDENTIFIER ${PACKAGE_IDENTIFIER}
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
+    # Override android package source directory
+    # QT_ANDROID_PACKAGE_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/android
 )
+
+if (ANDROID)
+    set_target_properties(appNuve PROPERTIES
+         QT_ANDROID_EXTRA_LIBS
+             "${ANDROID_SDK_ROOT}/android_openssl/ssl_3/${CMAKE_ANDROID_ARCH_ABI}/libcrypto_3.so;${ANDROID_SDK_ROOT}/android_openssl/ssl_3/${CMAKE_ANDROID_ARCH_ABI}/libssl_3.so"
+    )
+elseif (IOS)
+    set(PRODUCT_NAME ${PROJECT_NAME})
+    set(PRODUCT_BUNDLE_IDENTIFIER ${PACKAGE_IDENTIFIER})
+
+    # Configure custom Info.plist
+    configure_file(${CMAKE_SOURCE_DIR}/Res/iOS/Info.plist.in
+        ${CMAKE_CURRENT_BINARY_DIR}/Info.plist
+        @ONLY
+    )
+
+    set_source_files_properties("${CMAKE_CURRENT_BINARY_DIR}/Info.plist"
+        PROPERTIES
+        MACOSX_PACKAGE_LOCATION Resources
+    )
+
+    set_target_properties(${MAIN_TARGET_NAME} PROPERTIES
+        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_BINARY_DIR}/Info.plist"
+    )
+
+    # Prepare ios icon pack
+    set(IOS_ASSETS_PATH
+        ${CMAKE_SOURCE_DIR}/Res/iOS/Assets.xcassets
+    )
+
+    # Path to .xcassets folder
+    set(CMAKE_XCODE_ATTRIBUTE_ASSET_CATALOGS ${IOS_ASSETS_PATH})
+    # App Icon name: Must match the prefix of icon-set folder inside .xcassets
+    set(CMAKE_XCODE_ATTRIBUTE_ASSET_CATALOGS_APP_ICON "AppIcon")
+
+    # Add .xcassets as resource
+    target_sources(${MAIN_TARGET_NAME} PRIVATE
+        ${IOS_ASSETS_PATH}
+    )
+
+    # Set assets location to Resources
+    set_source_files_properties(${IOS_ASSETS_PATH}
+        PROPERTIES
+        MACOSX_PACKAGE_LOCATION Resources
+    )
+
+    # Set appicon pack name
+    set_target_properties(${MAIN_TARGET_NAME} PROPERTIES
+        XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME AppIcon;
+    )
+endif()
 
 target_link_libraries(${MAIN_TARGET_NAME} PRIVATE
     Qt6::Quick
