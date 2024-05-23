@@ -41,7 +41,9 @@ qt_add_executable(${MAIN_TARGET_NAME}
 
 add_subdirectory(src/)
 add_subdirectory(qml/)
+add_subdirectory(qml/style)
 add_subdirectory(res/)
+
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
@@ -61,6 +63,7 @@ target_link_libraries(${MAIN_TARGET_NAME} PRIVATE
     appQml
     appBackend
     appRes
+    ApplicationStyleplugin
 )
 
 include(GNUInstallDirs)

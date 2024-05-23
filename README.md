@@ -1,3 +1,3 @@
 # Project Template
-Minimal template
+Project template with a custom style module
 
