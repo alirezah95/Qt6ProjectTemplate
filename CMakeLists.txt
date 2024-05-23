@@ -58,6 +58,7 @@ qt_add_qml_module(${MAIN_TARGET_NAME}
 #
 
 add_subdirectory(Res/)
+add_subdirectory(Qml/Style)
 
 #
 # Target related properties and definitions
@@ -82,6 +83,7 @@ set_target_properties(${MAIN_TARGET_NAME} PROPERTIES
 target_link_libraries(${MAIN_TARGET_NAME} PRIVATE
     Qt6::Quick
     appResources
+    ApplicationStyleplugin
 )
 
 include(GNUInstallDirs)
