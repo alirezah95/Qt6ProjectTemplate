@@ -57,3 +57,5 @@ compile_commands.json
 android/build.gradle
 
 .DS_Store
+
+build/

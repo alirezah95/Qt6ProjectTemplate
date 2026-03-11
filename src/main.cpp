@@ -1,7 +1,8 @@
-#include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QGuiApplication>
 
-int main(int argc, char *argv[])
+
+int main(int argc, char* argv[])
 {
     QGuiApplication app(argc, argv);
 
@@ -14,7 +15,7 @@ int main(int argc, char *argv[])
         Qt::QueuedConnection);
 
     //! Use MAIN_MODULE from CMake for flexibility
-    engine.loadFromModule(MAIN_MODULE, "Main");
+    engine.loadFromModule(QML_MODULE_URI, "Main");
 
     return app.exec();
 }

@@ -60,7 +60,7 @@ AlignConsecutiveTableGenDefinitionColons:
   AlignFunctionPointers: false
   PadOperators:    false
 AlignEscapedNewlines: Right
-AlignOperands:   DontAlign
+AlignOperands:   AlignAfterOperator
 AlignTrailingComments:
   Kind:            Always
   OverEmptyLines:  0
@@ -107,7 +107,8 @@ BreakAfterAttributes: Leave
 BreakAfterJavaFieldAnnotations: false
 BreakAfterReturnType: None
 BreakArrays:     true
-BreakBeforeBinaryOperators: All
+BreakBinaryOperations: RespectPrecedence
+BreakBeforeBinaryOperators: NonAssignment
 BreakBeforeConceptDeclarations: Always
 BreakBeforeBraces: Custom
 BreakBeforeInlineASMColon: OnlyMultiline
@@ -116,7 +117,7 @@ BreakConstructorInitializers: BeforeComma
 BreakFunctionDefinitionParameters: false
 BreakInheritanceList: BeforeColon
 BreakStringLiterals: true
-BreakTemplateDeclarations: MultiLine
+BreakTemplateDeclarations: Yes
 ColumnLimit:     100
 CommentPragmas:  '^ IWYU pragma:'
 CompactNamespaces: false
@@ -165,11 +166,11 @@ InsertNewlineAtEOF: true
 InsertTrailingCommas: None
 IntegerLiteralSeparator:
   Binary:          4
-  BinaryMinDigits: 5
+  BinaryMinDigits: 8
   Decimal:         3
-  DecimalMinDigits: 4
-  Hex:             0
-  HexMinDigits:    0
+  DecimalMinDigits: 6
+  Hex:             4
+  HexMinDigits:    8
 JavaScriptQuotes: Leave
 JavaScriptWrapImports: true
 KeepEmptyLines:
